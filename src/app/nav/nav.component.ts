@@ -1,3 +1,4 @@
+import { User } from './../class/user';
 import { Router } from '@angular/router';
 import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,16 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  visible: boolean = false;
+  user: User = new User();
 
   constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
-    if (sessionStorage.getItem('currentUser')) {
-      // logged in so nav visible
-      this.visible = true;
-    }
-    this.auth.userUpdated.map(u => u != null).subscribe(a => this.visible = a);
+    this.user = this.auth.getUser();
+    this.auth.userUpdated.subscribe(user => this.user = user);
   }
 
   logout() {

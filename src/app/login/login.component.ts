@@ -9,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  userName: string;
-  password: string;
+  userName: string = 'user';
+  password: string = 'user';
   remembered: boolean;
 
   constructor(private router: Router, private auth: AuthService) { }

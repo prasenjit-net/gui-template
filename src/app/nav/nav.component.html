@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top" *ngIf="visible">
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top" *ngIf="user">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,19 +12,15 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink='/nf'>Not Found</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" routerLink=''>Action</a>
-          <a class="dropdown-item" routerLink=''>Another action</a>
-          <a class="dropdown-item" routerLink=''>Something else here</a>
-        </div>
-      </li>
     </ul>
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink='/logout' (click)="logout()">Logout</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">Welcome {{user.name}}!</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" routerLink='/profile'>Profile</a>
+          <a class="dropdown-item" routerLink='/logout' (click)="logout()">Logout</a>
+        </div>
       </li>
     </ul>
   </div>
