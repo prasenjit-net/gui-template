@@ -9,16 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  userName: string;
+  password: string;
+  remembered: boolean;
+
   constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
-    if(this.auth.isLoggedIn()){
+    if (this.auth.isLoggedIn()) {
       this.router.navigateByUrl('');
     }
   }
 
-  login(userName: string, password: string, remembered: boolean) {
-    this.auth.login(userName, password);
+  login() {
+    this.auth.login(this.userName, this.password, this.remembered);
     let route = sessionStorage.getItem('nextRoute');
     if (route) {
       this.router.navigateByUrl(route);

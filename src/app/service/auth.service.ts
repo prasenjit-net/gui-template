@@ -8,24 +8,52 @@ export class AuthService {
   public userUpdated = new EventEmitter<User>();
 
   constructor() {
-    if (sessionStorage.getItem('currentUser')) {
-      this.userUpdated.emit(new User(sessionStorage.getItem('currentUser')));
-    }
+    this.userUpdated.emit(this.getUser());
   }
 
-  login(userName: string, password: string) {
-    let user = new User(userName);
-    sessionStorage.setItem('currentUser', userName);
+  login(userName: string, password: string, remembered: boolean = false) {
+    let user = new User();
+    user.name = userName;
+    let data = JSON.stringify(user);
+    this.setUserData(data, remembered);
     this.userUpdated.emit(user);
   }
 
   logout() {
     sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
     this.userUpdated.emit(null);
   }
 
   isLoggedIn() {
-    return sessionStorage.getItem('currentUser') != null;
+    return this.getUserData() != null;
+  }
+
+  getUser() {
+    let data = this.getUserData();
+    if (data) {
+      return JSON.parse(data);
+    } else {
+      return null;
+    }
+  }
+
+  private getUserData() {
+    let data = sessionStorage.getItem('currentUser');
+    if (!data) {
+      data = localStorage.getItem('currentUser');
+      if(data){
+        sessionStorage.setItem('currentUser', data);
+      }
+    }
+    return data;
+  }
+
+  private setUserData(data: string, remembered: boolean = false) {
+    if (remembered) {
+      localStorage.setItem('currentUser', data);
+    }
+    sessionStorage.setItem('currentUser', data);
   }
 
 }
