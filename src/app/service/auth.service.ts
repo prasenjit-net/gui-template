@@ -26,23 +26,26 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.getUserData() != null;
+    return this.getUser() != null;
   }
 
   getUser() {
     let data = this.getUserData();
     if (data) {
-      return JSON.parse(data);
-    } else {
-      return null;
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        console.error("failed to restore remembered user");
+      }
     }
+    return null;
   }
 
   private getUserData() {
     let data = sessionStorage.getItem('currentUser');
     if (!data) {
       data = localStorage.getItem('currentUser');
-      if(data){
+      if (data) {
         sessionStorage.setItem('currentUser', data);
       }
     }
